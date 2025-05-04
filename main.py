@@ -5,7 +5,7 @@ from forms.user import RegisterForm
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'zxcEgor'
+app.config['SECRET_KEY'] = 'zxcmodePashtet'
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -22,19 +22,23 @@ def reqister():
                                    form=form,
                                    message="Такой пользователь уже есть")
         user = User(
-            name=form.name.data,
             email=form.email.data,
-            about=form.about.data
+            surname=form.surname.data,
+            name=form.name.data,
+            age=form.age.data,
+            position=form.position.data,
+            speciality=form.speciality.data,
+            address=form.address.data
         )
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        return redirect('/login')
+        return redirect('/register')
     return render_template('register.html', title='Регистрация', form=form)
 
 
 def main():
-    db_session.global_init('db/news.db')
+    db_session.global_init('db/Users.db')
     app.run()
 
 
